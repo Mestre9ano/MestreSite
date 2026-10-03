@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Acesso Restrito</title>
+  <style>
+  body {
+    background: #0a0c0a;
+    color: #b8f5c0;
+    font-family: "Courier New", monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  #login {
+    width: 320px;
+    border: 1px solid #1e3a24;
+    padding: 28px;
+  }
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    background: transparent;
+    border: 1px solid #1e3a24;
+    color: #b8f5c0;
+    padding: 10px;
+    margin: 4px 0 14px 0;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background: #b8f5c0;
+    color: #0a0c0a;
+    border: none;
+    cursor: pointer;
+  }
+
+  #mensagem {
+    color: #ff5c5c;
+  }
+
+  #secreto {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+  <div id="login">
+    <h1>ACESSO RESTRITO</h1>
+
+    <label for="nome">Nome</label>
+    <input id="nome">
+
+    <label for="senha">Senha</label>
+    <input id="senha" type="password">
+
+    <button id="botao">Entrar</button>
+
+    <p id="mensagem"></p>
+  </div>
+
+  <div id="secreto">
+    <p>Cantinho do tráfico, 9:35 15/10/2026.</p>
+  </div>
+
+ <script>
+  const nomesAceitos = ["Allan", "Ana", "Arthur", "Felipe", "João Pedro", "Luiz Felipe", "Manu", "Natália", "Nicole", "Pedro Elias", "Pedro Henrique", "Pedro Jorge", "Pedro Barsi", "Sara", "Sílvio", "Tiago", "Vinícius", "Vitória"];
+  const senhaCorreta = "seilá";
+
+  function limpar(texto) {
+    return texto
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  const nomesLimpos = nomesAceitos.map(limpar);
+
+  function entrar() {
+    const nome = limpar(document.getElementById("nome").value);
+    const senha = document.getElementById("senha").value;
+
+    if (nomesLimpos.includes(nome) && senha === senhaCorreta) {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("secreto").style.display = "block";
+    } else {
+      document.getElementById("mensagem").textContent = "Acesso negado.";
+    }
+  }
+
+  document.getElementById("botao").addEventListener("click", entrar);
+</script>
+
+</body>
+</html>
